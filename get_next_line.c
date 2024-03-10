@@ -5,27 +5,26 @@
 char *get_next_line(int fd)
 {
 	char	buf[1];
-	//char	b[BUFFER_SIZE];
 	char	*b;
 	int		nb_read;
-	int		count;
+	int		i;
 
 	if (fd == -1)
-		return (0);
+		return (NULL);
 	b = (char *) malloc(sizeof(char) * BUFFER_SIZE);
-	count = 0;
-	while (nb_read != -1 && count < BUFFER_SIZE)
+	i = 0;
+	while (nb_read != -1 && i < BUFFER_SIZE)
 	{
 		nb_read = read(fd, buf, 1);
 		if (nb_read == -1)
 			return (NULL);
-		b[count] = buf[0]; 
-		if (b[count] == '\n' && count + 1 < BUFFER_SIZE)
+		b[i] = buf[0]; 
+		if (b[i] == '\n' && i + 1 < BUFFER_SIZE)
 		{
-			b[count + 1] = '\0';
+			b[i + 1] = '\0';
 			break ;
 		}
-		count++;
+		i++;
 	}
 	return (b);
 }
