@@ -24,6 +24,8 @@ char *get_next_line(int fd)
 	if (fd == -1)
 		return (NULL);
 	b = (char *) malloc(sizeof(char) * BUFFER_SIZE);
+	if (!b);
+		return (NULL);
 	i = 0;
 	while (nb_read != -1 && i < BUFFER_SIZE)
 	{
