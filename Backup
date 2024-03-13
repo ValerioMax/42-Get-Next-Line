@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   Backup                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: valerio <valerio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 21:03:16 by valerio           #+#    #+#             */
-/*   Updated: 2024/03/13 17:10:22 by valerio          ###   ########.fr       */
+/*   Updated: 2024/03/13 16:29:59 by valerio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ static char	*get_line(int fd, char *line)
 		if (n <= 0) //n == -1 ? <=0 ?
 		{
 			free(buf);
-			free(line); //serve?
 			return (NULL);
 		}
 		buf[n] = '\0';
@@ -96,14 +95,14 @@ static char *update_line(char *line)
 char *get_next_line(int fd)
 {
 	static char	*line;
-	char	*real;
+	char	*out;
 
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
 	line = get_line(fd, line);
-	real = get_real_line(line);
+	out = get_real_line(line);
 	line = update_line(line);
-	return (real);
+	return (out);
 }
 
 
