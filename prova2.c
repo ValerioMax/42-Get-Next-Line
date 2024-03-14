@@ -1,6 +1,9 @@
-#include "get_next_line.h"
+#include <stdlib.h>
+#include <unistd.h>
 #include <fcntl.h>	//provv
 #include <stdio.h>	//provv
+
+#define BUFFER_SIZE 6
 
 /*
 char *get_line(int fd)
@@ -42,7 +45,17 @@ char *get_line(int fd)
 }
 */
 
+size_t	ft_strlen(const char *s)
+{
+	size_t	len;
 
+	if (!s) //
+		return (0); //serve?
+	len = 0;
+	while (s[len] != '\0')
+		len++;
+	return (len);
+}
 
 static char	*append(char *s1, char *s2)
 {
@@ -78,14 +91,31 @@ static char	*append(char *s1, char *s2)
 	return (s);
 }
 
-static char	*get_line(int fd, char *line)
+char	*ft_strchr(const char *s, int c)
+{
+	size_t	i;
+	char	*str;
+	
+	if (!s)
+		return (NULL);
+	str = (char *)s;
+	i = 0;
+	while (str[i])
+		if (str[i++] == (unsigned char) c)
+			return (str + i);
+	if (str[i] == (unsigned char) c)
+		return (str + i);
+	return (NULL);
+}
+
+static int	get_line(int fd, char *line)
 {
 	char	*buf;
 	int	n;
 
 	buf = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buf)
-		return (NULL);
+		return (1);
 	n = 1;
 	while (!ft_strchr(line, '\n') && n > 0)
 	{
@@ -95,15 +125,16 @@ static char	*get_line(int fd, char *line)
 		{
 			free(buf);
 			free(line); //?
-			return (NULL);
+			return (1);
 		}
-		printf("AAAA\n");
 		buf[n] = '\0';
 		line = append(line, buf);
 	}
+	printf("%s\n", line);
 	free(buf);
-	printf("AAAA\n");
-	return (line);
+	if (n == 0)
+		return (1);
+	return (0);
 }
 
 static char	*real_line(char	*line)
@@ -111,9 +142,12 @@ static char	*real_line(char	*line)
 	char	*out;
 	int	len;
 	int	i;
-	
-	//if (!line)
-	//	return (NULL);
+
+	printf("AAAA\n");
+	printf("%s\n", line);
+	printf("AAAA\n");
+	if (!line)
+		return (NULL);
 	len = 0;
 	while (line[len] && line[len] != '\n')
 		len++;
@@ -138,15 +172,18 @@ static char	*real_line(char	*line)
 	return (out);
 }
 
-static char	*update_line(char *line)
+static char	*update_line(char *line, int var)
 {
 	char	*new;
 	int		i;
 	int 	len;
 	int 	j;
 
-	//if (!line)
-	//	return (NULL);
+	if (var)
+	{
+		free(line);
+		return (NULL);
+	}
 	i = 0;
 	while (line[i] && line[i] != '\n')
 		i++;
@@ -180,21 +217,23 @@ char	*get_next_line(int fd)
 {
 	static char	*line;
 	char		*out;
+	int			var;
 
 	//line = NULL;
 	
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
-	line = get_line(fd, line);
+	var = get_line(fd, line);
+	printf("%s\n", line);
 	out = real_line(line);
-	line = update_line(line);
+	line = update_line(line, var);
 	return (out);
 }
 
 int main()
 {
 	
-	int fd = open("test/1-brouette.txt", O_RDONLY);
+	int fd = open("cat.txt", O_RDONLY);
 	static char *s;
 
 	s = get_next_line(fd);

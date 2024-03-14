@@ -6,7 +6,7 @@
 /*   By: valerio <valerio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 20:14:48 by valerio           #+#    #+#             */
-/*   Updated: 2024/03/13 16:43:39 by valerio          ###   ########.fr       */
+/*   Updated: 2024/03/15 00:54:55 by valerio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ size_t	ft_strlen(const char *s)
 {
 	size_t	len;
 
+	if (!s) //
+		return (0); //serve?
 	len = 0;
 	while (s[len] != '\0')
 		len++;
