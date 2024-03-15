@@ -90,19 +90,19 @@ static char	*get_line(int fd, char *line)
 	while (!ft_strchr(line, '\n') && n > 0)
 	{
 		n = read(fd, buf, BUFFER_SIZE);
-		printf("%d\n", n);
+		//printf("%d\n", n);
 		if (n == -1) // <=0?
 		{
 			free(buf);
 			free(line); //?
 			return (NULL);
 		}
-		printf("AAAA\n");
 		buf[n] = '\0';
 		line = append(line, buf);
+		//printf("line: %s\n", line);
 	}
 	free(buf);
-	printf("AAAA\n");
+	//printf("OK\n");
 	return (line);
 }
 
@@ -114,6 +114,12 @@ static char	*real_line(char	*line)
 	
 	//if (!line)
 	//	return (NULL);
+	if (!line[0])
+	{
+		//free(line);
+		return (NULL);
+	}
+		
 	len = 0;
 	while (line[len] && line[len] != '\n')
 		len++;
@@ -147,10 +153,19 @@ static char	*update_line(char *line)
 
 	//if (!line)
 	//	return (NULL);
+
+	//printf("update1: %s\n", new);
 	i = 0;
 	while (line[i] && line[i] != '\n')
 		i++;
-	if (line[i])
+	//printf("char: %c\n", line[i]);
+	if (line[i] == '\0')
+	{
+		free(line);
+		//printf("NULL\n");
+		return (NULL);
+	}
+	if (line[i] != '\0')
 	{
 		i++;
 		j = i;
@@ -173,6 +188,7 @@ static char	*update_line(char *line)
 		new[i] = '\0';
 	}
 	free(line);
+	//printf("update: %s\n", new);
 	return (new); //NULL ?
 }
 
@@ -181,8 +197,6 @@ char	*get_next_line(int fd)
 	static char	*line;
 	char		*out;
 
-	//line = NULL;
-	
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
 	line = get_line(fd, line);
@@ -191,10 +205,11 @@ char	*get_next_line(int fd)
 	return (out);
 }
 
+/*
 int main()
 {
 	
-	int fd = open("test/1-brouette.txt", O_RDONLY);
+	int fd = open("cat.txt", O_RDONLY);
 	static char *s;
 
 	s = get_next_line(fd);
@@ -206,32 +221,12 @@ int main()
 	}
 	free(s);
 	
-	
-
-	/*
-	char *s1;
-	char *s2;
-
-	s1 = malloc(5);
-	s1[0] = 'c';
-	s1[1] = 'i';
-	s1[2] = 'a';
-	s1[3] = 'o';
-	s1[4] = '\0';
-
-	s2 = malloc(4);
-	s2[0] = ' ';
-	s2[1] = 'O';
-	s2[2] = 'K';
-	s2[3] = '\0';
-
-	printf("%s, %s\n", s1, s2);
-	s1 = append(s1, s2);
-	printf("%s\n", s1);
-
-	free(s1);
-	free(s2);
-	*/
-	
 	return 0;
 }
+
+
+
+
+
+
+*/
