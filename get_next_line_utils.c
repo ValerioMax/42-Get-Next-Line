@@ -6,51 +6,21 @@
 /*   By: valerio <valerio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 20:14:48 by valerio           #+#    #+#             */
-/*   Updated: 2024/03/15 00:54:55 by valerio          ###   ########.fr       */
+/*   Updated: 2024/03/16 15:32:47 by valerio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-
 size_t	ft_strlen(const char *s)
 {
 	size_t	len;
 
-	if (!s) //
-		return (0); //serve?
 	len = 0;
 	while (s[len] != '\0')
 		len++;
 	return (len);
 }
-
-/*
-char	*ft_strjoin(char *s1, char *s2)
-{
-	char	*s;
-	size_t	i;
-
-	if (!s1)
-	{
-		s1 = (char *)malloc(sizeof(char) * 1);
-		s1[0] = '\0';
-	}
-	if (!s2)
-		return (NULL);
-	
-	s = (char *) malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
-	if (!s)
-		return (NULL);
-	i = 0;
-	while (*s1)
-		s[i++] = *s1++;
-	while (*s2)
-		s[i++] = *s2++;
-	s[i] = '\0';
-	return (s);
-}
-*/
 
 char	*ft_strjoin(char *s1, char *s2)
 {
@@ -60,33 +30,32 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	if (!s1)
 	{
-		s1 = (char *)malloc(sizeof(char) * 1);
-		s1[0] = '\0';
+		s1 = ft_strdup(""); //NOT SURE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		//s1 = malloc(sizeof(char));
+		//if (!s1)
+		//	return (NULL);
+		//s1[0] = '\0';
 	}
 	if (!s2)
-		return (NULL);
-	
-	s = (char *) malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
-	if (!s)
-		return (NULL);
-	i = 0;
-	j= 0;
-	while (s1[j])
-		s[i++] = s1[j++];
+		return (s1); //oppure NULL?
+	s = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	j = 0;
-	while (s2[j])
-		s[i++] = s2[j++];
-	s[i] = '\0';
+	i = 0;
+	while (s1[i])
+		s[j++] = s1[i++];
+	i = 0;
+	while (s2[i])
+		s[j++] = s2[i++];
+	s[j] = '\0';
 	free(s1);
 	return (s);
 }
-
 
 char	*ft_strchr(const char *s, int c)
 {
 	size_t	i;
 	char	*str;
-	
+
 	if (!s)
 		return (NULL);
 	str = (char *)s;
@@ -97,4 +66,26 @@ char	*ft_strchr(const char *s, int c)
 	if (str[i] == (unsigned char) c)
 		return (str + i);
 	return (NULL);
+}
+
+static void	*ft_memcpy(void *dest, const void *src, size_t n)
+{
+	if (!dest || (!dest && !src) || n == 0)
+		return (dest);
+	while (n--)
+		((char *) dest)[n] = ((char *) src)[n];
+	return (dest);
+}
+
+char	*ft_strdup(const char *s)
+{
+	char	*pt;
+	size_t	len;
+
+	len = ft_strlen(s);
+	pt = (char *) malloc((len + 1) * sizeof(char));
+	if (!pt)
+		return (NULL);
+	pt = ft_memcpy(pt, s, len + 1);
+	return (pt);
 }

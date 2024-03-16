@@ -1,2 +1,33 @@
 ciao come va?
 io tutto bene!
+
+static char	*update_line(char *line)
+{
+	char	*new;
+	int		i;
+	int		len;
+	int		j;
+
+	i = 0;
+	while (line[i] && line[i] != '\n')
+		i++;
+	if (!line[i])
+	{
+		free(line);
+		return (NULL);
+	}
+	//i++;
+	//j = i;
+	len = 0;
+	while (line[i++])
+		len++;
+	new = malloc(sizeof(char) * (len + 1));
+	if (!new)
+		return (NULL);
+	i = 0;
+	while (line[j])
+		new[i++] = line[j++];
+	new[i] = '\0';
+	free(line);
+	return (new); //NULL ? //potrei fare if (!line[i]) return (NULL); return (new); invece che le quattro righe di if all'inizio
+}
