@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vdessena <vdessena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/11 19:15:27 by vdessena          #+#    #+#             */
-/*   Updated: 2024/04/11 19:15:29 by vdessena         ###   ########.fr       */
+/*   Created: 2024/04/11 19:15:32 by vdessena          #+#    #+#             */
+/*   Updated: 2024/04/11 19:18:31 by vdessena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 size_t	ft_strlen(const char *s)
 {
@@ -62,7 +62,7 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-static void	*ft_memcpy(void *dest, const void *src, size_t n)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
 	if (!dest || (!dest && !src) || n == 0)
 		return (dest);

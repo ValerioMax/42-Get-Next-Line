@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vdessena <vdessena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/11 19:15:15 by vdessena          #+#    #+#             */
-/*   Updated: 2024/04/11 19:18:14 by vdessena         ###   ########.fr       */
+/*   Created: 2024/04/11 19:15:50 by vdessena          #+#    #+#             */
+/*   Updated: 2024/04/11 19:15:51 by vdessena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*get_line(int fd, char *line)
 {
@@ -85,13 +85,13 @@ char	*update_line(char *line)
 
 char	*get_next_line(int fd)
 {
-	static char	*line;
+	static char	*lines[FDS];
 	char		*out;
 
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
-	line = get_line(fd, line);
-	out = real_line(line);
-	line = update_line(line);
+	lines[fd] = get_line(fd, lines[fd]);
+	out = real_line(lines[fd]);
+	lines[fd] = update_line(lines[fd]);
 	return (out);
 }
